@@ -1766,9 +1766,10 @@ function ctaCardHTML(c,preview){
       </div>`;
 }
 function refTilesHTML(list,preview){
-  return `<div class="ref-brands n${list.length}"${preview?'':' id="refBrands"'}>${list.map((b,i)=>`<button type="button" class="ref-brand${b.logo&&b.logo.url?'':' nologo'}" data-bi="${i}" aria-label="${esc(b.name)} 로고${b.logo&&b.logo.url?' 크게 보기':''}"${preview?' tabindex="-1"':''}>
+  const tiles=`<div class="ref-brands n${list.length}"${preview?'':' id="refBrands"'}>${list.map((b,i)=>`<button type="button" class="ref-brand${b.logo&&b.logo.url?'':' nologo'}" data-bi="${i}" aria-label="${esc(b.name)} 로고${b.logo&&b.logo.url?' 크게 보기':''}"${preview?' tabindex="-1"':''}>
         <span class="rb-logo">${b.logo&&b.logo.url?`<img src="${esc(b.logo.url)}" alt="${esc((b.logo&&b.logo.alt)||b.name+' 로고')}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.closest('.ref-brand').classList.add('broken');this.remove()">`:''}<i class="rb-msg">${b.logo&&b.logo.url?'로고를 불러오지 못했어요':'로고 준비 중'}</i></span>
         <span class="rb-name">${esc(b.name)}</span></button>`).join('')}</div>`;
+  return tiles;   // v2.33.0: 캐러셀 없이 한 가로줄(3열)에 나열
 }
 function refBrandsOf(info){return ((info&&info.refBrands)||[]).filter(b=>b&&String(b.name||'').trim()).slice(0,4);}
 function renderStyle(){
@@ -2725,7 +2726,7 @@ function goHome(){
 /* ===== 버전 체계 =====
    · 관리자에서 정보 수정 후 저장 → 마이너 +0.1
    · 코드 레벨의 큰 개편 → 메이저 +1.0 (APP_VERSION 직접 수정)      */
-let APP_VERSION='2.32.2';
+let APP_VERSION='2.33.0';
 let BUILD_DATE='2026-10-19';
 /* 표시용 버전·빌드일자를 화면에 반영 */
 function paintVersion(){
