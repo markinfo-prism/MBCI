@@ -1282,6 +1282,13 @@ function finishQ(){
   document.body.classList.remove('mbci-test-mode');   // 결과 화면은 다시 2단 레이아웃(게이지+결과)으로
   renderMbciResult();
   resEnter();   // v2.24.0: 결과가 처음 표시될 때만 은은한 등장 모션
+   
+   // GTM - MBCI 테스트 완료 이벤트
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: 'mbci_test_complete'
+  }); 
+   
   /* v2.21.0: 20문항을 모두 답해 결과가 확정된 이 지점에서만 1회 기록한다(관리자·상담·다른 코어 보기는 이 함수를 거치지 않는다) */
   try{ if(window.MBCI_RECORD)window.MBCI_RECORD.onComplete({answers:qAns,result:mbciResult,brand:brandName,biz:(bizCode||(bizEtc?'etc':null))}); }catch(e){ console.warn('[record]',e); }
 }
